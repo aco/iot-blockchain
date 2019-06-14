@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		493FF13722B2EBC600B33EDC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF13622B2EBC600B33EDC /* main.cpp */; };
+		493FF14A22B2EBF600B33EDC /* block.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF13F22B2EBF500B33EDC /* block.cpp */; };
+		493FF14B22B2EBF600B33EDC /* transaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF14022B2EBF500B33EDC /* transaction.cpp */; };
+		493FF14C22B2EBF600B33EDC /* transaction_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF14122B2EBF500B33EDC /* transaction_device.cpp */; };
+		493FF14D22B2EBF600B33EDC /* transaction_policy_amendment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF14222B2EBF500B33EDC /* transaction_policy_amendment.cpp */; };
+		493FF14E22B2EBF600B33EDC /* policy_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF14422B2EBF500B33EDC /* policy_manager.cpp */; };
+		493FF14F22B2EBF600B33EDC /* transaction_admin_transfer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF14622B2EBF500B33EDC /* transaction_admin_transfer.cpp */; };
+		493FF15322B2EC0000B33EDC /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF15122B2EC0000B33EDC /* log.cpp */; };
+		493FF15622B2EC1500B33EDC /* blockchain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF15422B2EC1500B33EDC /* blockchain.cpp */; };
+		493FF15A22B2F2BC00B33EDC /* device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF15822B2F2BC00B33EDC /* device.cpp */; };
+		493FF15D22B2F62700B33EDC /* mock_network.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF15B22B2F62700B33EDC /* mock_network.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +35,29 @@
 /* Begin PBXFileReference section */
 		493FF13322B2EBC600B33EDC /* iot-blockchain */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "iot-blockchain"; sourceTree = BUILT_PRODUCTS_DIR; };
 		493FF13622B2EBC600B33EDC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		493FF13D22B2EBF500B33EDC /* transaction.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = transaction.hpp; sourceTree = "<group>"; };
+		493FF13E22B2EBF500B33EDC /* transaction_admin_transfer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = transaction_admin_transfer.hpp; sourceTree = "<group>"; };
+		493FF13F22B2EBF500B33EDC /* block.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = block.cpp; sourceTree = "<group>"; };
+		493FF14022B2EBF500B33EDC /* transaction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transaction.cpp; sourceTree = "<group>"; };
+		493FF14122B2EBF500B33EDC /* transaction_device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transaction_device.cpp; sourceTree = "<group>"; };
+		493FF14222B2EBF500B33EDC /* transaction_policy_amendment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transaction_policy_amendment.cpp; sourceTree = "<group>"; };
+		493FF14322B2EBF500B33EDC /* transaction_policy_amendment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = transaction_policy_amendment.hpp; sourceTree = "<group>"; };
+		493FF14422B2EBF500B33EDC /* policy_manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = policy_manager.cpp; sourceTree = "<group>"; };
+		493FF14522B2EBF500B33EDC /* policy_manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = policy_manager.hpp; sourceTree = "<group>"; };
+		493FF14622B2EBF500B33EDC /* transaction_admin_transfer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transaction_admin_transfer.cpp; sourceTree = "<group>"; };
+		493FF14722B2EBF500B33EDC /* picosha2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = picosha2.hpp; sourceTree = "<group>"; };
+		493FF14822B2EBF500B33EDC /* transaction_device.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = transaction_device.hpp; sourceTree = "<group>"; };
+		493FF14922B2EBF500B33EDC /* block.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = block.hpp; sourceTree = "<group>"; };
+		493FF15022B2EC0000B33EDC /* log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = log.hpp; sourceTree = "<group>"; };
+		493FF15122B2EC0000B33EDC /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = log.cpp; sourceTree = "<group>"; };
+		493FF15222B2EC0000B33EDC /* json.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = json.hpp; sourceTree = "<group>"; };
+		493FF15422B2EC1500B33EDC /* blockchain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = blockchain.cpp; sourceTree = "<group>"; };
+		493FF15522B2EC1500B33EDC /* blockchain.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = blockchain.hpp; sourceTree = "<group>"; };
+		493FF15722B2EC6000B33EDC /* blockchain_configuration.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = blockchain_configuration.hpp; sourceTree = "<group>"; };
+		493FF15822B2F2BC00B33EDC /* device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = device.cpp; sourceTree = "<group>"; };
+		493FF15922B2F2BC00B33EDC /* device.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = device.hpp; sourceTree = "<group>"; };
+		493FF15B22B2F62700B33EDC /* mock_network.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mock_network.cpp; sourceTree = "<group>"; };
+		493FF15C22B2F62700B33EDC /* mock_network.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = mock_network.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +90,30 @@
 		493FF13522B2EBC600B33EDC /* iot-blockchain */ = {
 			isa = PBXGroup;
 			children = (
+				493FF13F22B2EBF500B33EDC /* block.cpp */,
+				493FF14922B2EBF500B33EDC /* block.hpp */,
+				493FF15722B2EC6000B33EDC /* blockchain_configuration.hpp */,
+				493FF15422B2EC1500B33EDC /* blockchain.cpp */,
+				493FF15522B2EC1500B33EDC /* blockchain.hpp */,
+				493FF15822B2F2BC00B33EDC /* device.cpp */,
+				493FF15922B2F2BC00B33EDC /* device.hpp */,
+				493FF15222B2EC0000B33EDC /* json.hpp */,
+				493FF15122B2EC0000B33EDC /* log.cpp */,
+				493FF15022B2EC0000B33EDC /* log.hpp */,
 				493FF13622B2EBC600B33EDC /* main.cpp */,
+				493FF15B22B2F62700B33EDC /* mock_network.cpp */,
+				493FF15C22B2F62700B33EDC /* mock_network.hpp */,
+				493FF14722B2EBF500B33EDC /* picosha2.hpp */,
+				493FF14422B2EBF500B33EDC /* policy_manager.cpp */,
+				493FF14522B2EBF500B33EDC /* policy_manager.hpp */,
+				493FF14622B2EBF500B33EDC /* transaction_admin_transfer.cpp */,
+				493FF13E22B2EBF500B33EDC /* transaction_admin_transfer.hpp */,
+				493FF14122B2EBF500B33EDC /* transaction_device.cpp */,
+				493FF14822B2EBF500B33EDC /* transaction_device.hpp */,
+				493FF14222B2EBF500B33EDC /* transaction_policy_amendment.cpp */,
+				493FF14322B2EBF500B33EDC /* transaction_policy_amendment.hpp */,
+				493FF14022B2EBF500B33EDC /* transaction.cpp */,
+				493FF13D22B2EBF500B33EDC /* transaction.hpp */,
 			);
 			path = "iot-blockchain";
 			sourceTree = "<group>";
@@ -118,7 +174,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				493FF14C22B2EBF600B33EDC /* transaction_device.cpp in Sources */,
+				493FF14E22B2EBF600B33EDC /* policy_manager.cpp in Sources */,
+				493FF15622B2EC1500B33EDC /* blockchain.cpp in Sources */,
+				493FF15322B2EC0000B33EDC /* log.cpp in Sources */,
+				493FF14B22B2EBF600B33EDC /* transaction.cpp in Sources */,
+				493FF14F22B2EBF600B33EDC /* transaction_admin_transfer.cpp in Sources */,
 				493FF13722B2EBC600B33EDC /* main.cpp in Sources */,
+				493FF15D22B2F62700B33EDC /* mock_network.cpp in Sources */,
+				493FF15A22B2F2BC00B33EDC /* device.cpp in Sources */,
+				493FF14A22B2EBF600B33EDC /* block.cpp in Sources */,
+				493FF14D22B2EBF600B33EDC /* transaction_policy_amendment.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,7 +197,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -190,7 +256,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
