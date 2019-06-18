@@ -14,6 +14,7 @@ class Transaction
 public:
 	Transaction(std::string author_profile_identifier, bool expedited);
 
+    virtual Transaction *clone(void);
 	std::string getAuthorProfileIdentifier(void);
 	std::string getHash(void);
 
@@ -23,11 +24,6 @@ public:
 
 	virtual JSON json(void);
 	virtual std::string description(void);
-    
-    virtual Transaction *clone(void)
-    {
-        return new Transaction(*this);
-    }
     
     bool requestsExpeditedBroadcast(void); // todo include expedited status in description
 

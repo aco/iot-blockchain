@@ -23,6 +23,13 @@ Block::Block(std::string author_profile_identifier, uint16_t index, size_t reser
     this->prev_block_hash = prev_block_hash;
 }
 
+Block::Block(Block *block) : // clones block definition, leaves population to blockchain (allows blockchain to process contained transactions)
+    Block(block->author_profile_identifier, block->index, block->transactions.size(), block->hash)
+{
+    this->timestamp = block->timestamp;
+    this->prev_block_hash = block->prev_block_hash;
+}
+
 void Block::appendTransaction(Transaction *transaction)
 {
     if (this->hash.empty())
@@ -83,6 +90,16 @@ std::string Block::computeHash(void)
 uint16_t Block::getIndex(void)
 {
     return this->index;
+}
+
+std::string Block::getAuthorProfileIdentifier(void)
+{
+    return this->author_profile_identifier;
+}
+
+std::string Block::getPreviousBlockHash(void)
+{
+    return this->prev_block_hash;
 }
 
 JSON Block::json(void)

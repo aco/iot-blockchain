@@ -33,8 +33,8 @@ void PolicyAmendmentTransaction::computeHashAndSeal(void)
 {
 	std::stringstream string_stream;
 
-	string_stream << this->timestamp 
-		<< this->author_profile_identifier
+	string_stream << this->timestamp
+        << this->author_profile_identifier
 		<< this->device_identifier
 		<< this->subject_device_identifier;
 
@@ -62,8 +62,8 @@ std::string PolicyAmendmentTransaction::description(void)
 {
 	char buffer[64];
 
-	sprintf(buffer, "Amend policy for %s (device: %s)", this->device_identifier.c_str(),
-		this->author_profile_identifier.c_str());
+	sprintf(buffer, "Amend %s policy for %s (req. by: %s)", this->subject_device_identifier.c_str(),
+            this->device_identifier.c_str(), this->author_profile_identifier.c_str());
 
 	return buffer;
 }

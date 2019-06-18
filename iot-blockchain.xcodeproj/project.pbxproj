@@ -18,6 +18,8 @@
 		493FF15622B2EC1500B33EDC /* blockchain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF15422B2EC1500B33EDC /* blockchain.cpp */; };
 		493FF15A22B2F2BC00B33EDC /* device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF15822B2F2BC00B33EDC /* device.cpp */; };
 		493FF15D22B2F62700B33EDC /* mock_network.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 493FF15B22B2F62700B33EDC /* mock_network.cpp */; };
+		49C56E5122B41CA80056ADE1 /* device_participant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49C56E4F22B41CA80056ADE1 /* device_participant.cpp */; };
+		49DA130522B5917300CAB836 /* device_cluster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49DA130322B5917300CAB836 /* device_cluster.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,6 +60,10 @@
 		493FF15922B2F2BC00B33EDC /* device.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = device.hpp; sourceTree = "<group>"; };
 		493FF15B22B2F62700B33EDC /* mock_network.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mock_network.cpp; sourceTree = "<group>"; };
 		493FF15C22B2F62700B33EDC /* mock_network.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = mock_network.hpp; sourceTree = "<group>"; };
+		49C56E4F22B41CA80056ADE1 /* device_participant.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = device_participant.cpp; sourceTree = "<group>"; };
+		49C56E5022B41CA80056ADE1 /* device_participant.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = device_participant.hpp; sourceTree = "<group>"; };
+		49DA130322B5917300CAB836 /* device_cluster.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = device_cluster.cpp; sourceTree = "<group>"; };
+		49DA130422B5917300CAB836 /* device_cluster.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = device_cluster.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +101,10 @@
 				493FF15722B2EC6000B33EDC /* blockchain_configuration.hpp */,
 				493FF15422B2EC1500B33EDC /* blockchain.cpp */,
 				493FF15522B2EC1500B33EDC /* blockchain.hpp */,
+				49DA130322B5917300CAB836 /* device_cluster.cpp */,
+				49DA130422B5917300CAB836 /* device_cluster.hpp */,
+				49C56E4F22B41CA80056ADE1 /* device_participant.cpp */,
+				49C56E5022B41CA80056ADE1 /* device_participant.hpp */,
 				493FF15822B2F2BC00B33EDC /* device.cpp */,
 				493FF15922B2F2BC00B33EDC /* device.hpp */,
 				493FF15222B2EC0000B33EDC /* json.hpp */,
@@ -183,6 +193,8 @@
 				493FF13722B2EBC600B33EDC /* main.cpp in Sources */,
 				493FF15D22B2F62700B33EDC /* mock_network.cpp in Sources */,
 				493FF15A22B2F2BC00B33EDC /* device.cpp in Sources */,
+				49C56E5122B41CA80056ADE1 /* device_participant.cpp in Sources */,
+				49DA130522B5917300CAB836 /* device_cluster.cpp in Sources */,
 				493FF14A22B2EBF600B33EDC /* block.cpp in Sources */,
 				493FF14D22B2EBF600B33EDC /* transaction_policy_amendment.cpp in Sources */,
 			);

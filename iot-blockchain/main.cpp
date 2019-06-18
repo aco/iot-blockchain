@@ -13,57 +13,35 @@
 int main(int argc, const char * argv[])
 {
     auto admin_profile_identifier = "admin";
-    auto n = MockNetwork(admin_profile_identifier);
+    auto network = MockNetwork(admin_profile_identifier);
     
-    auto d = n.registerNetworkDevice<Device>(admin_profile_identifier, BlockchainConfiguration
-                                    {
-                                        admin_profile_identifier,
-                                        false,
-                                        5
-                                    });
+    // register standard device as administrator (first device to join the network)
+    auto admin_device = network.registerNetworkDevice<Device>(admin_profile_identifier, true);
+
+    // we do not manually use this participant device below
+    (void)network.registerNetworkDevice<ParticipantDevice>("light", false);
     
-    d->submitTransaction(new PolicyAmendmentTransaction("admin", "gas", "admin", ACCESS_READ | ACCESS_WRITE));
-    
-    auto pd = n.registerNetworkDevice<Device>("lightbulb", BlockchainConfiguration
-                                              {
-                                                  "lightbulb",
-                                                  false,
-                                                  2
-                                              });
-    
-    d->submitTransaction(new PolicyAmendmentTransaction("admin", "lightbulb", "admin", ACCESS_READ | ACCESS_WRITE));
-    auto dt = new DeviceTransaction("admin", "gas");
-    d->submitTransaction(dt);
-    
-    auto b = d->getBlockchain()->getChain();
-    
-    for (auto &e : *b)
+    admin_device->submitTransaction(new PolicyAmendmentTransaction("admin", "light", "admin", ACCESS_READ | ACCESS_WRITE));
+
+    // register cluster device
+    auto cluster_device = network.registerNetworkDevice<ClusterDevice>("cluster", false);
+
+    std::vector<std::string> cluster_subordinate_devices = { "gas", "flame" };
+    cluster_device->registerSubordinateDevices(cluster_subordinate_devices);
+
+    for (auto &network_device_identifier : network.getDeviceIdentifiers())
     {
-        std::cout << e->getIndex() << std::endl;
-        
-        for (auto i = 0; i < e->size(); i++)
+        for (auto &cluster_subordinate_device : cluster_subordinate_devices)
         {
-            std:: cout << e->getTransactionAt(i)->description() << std::endl;
+            admin_device->submitTransaction(new PolicyAmendmentTransaction("admin", cluster_subordinate_device, network_device_identifier,
+                                                                ACCESS_READ | ACCESS_WRITE));
         }
     }
+
+    admin_device->submitTransaction(new DeviceTransaction("admin", "light", 50, false));
+    admin_device->submitTransaction(new DeviceTransaction("admin", "gas"));
     
-    std::cout << d->getLeadBlock()->getHash() << std::endl;
-    std::cout << pd->getLeadBlock()->getHash() << std::endl;
-    b = pd->getBlockchain()->getChain();
-    
-    for (auto &e : *b)
-    {
-        std::cout << e->getIndex() << std::endl;
-        
-        for (auto i = 0; i < e->size(); i++)
-        {
-            std:: cout << e->getTransactionAt(i)->description() << std::endl;
-        }
-    }
-    
-    auto dlb = d->getBlockchain()->getBlockAt(0);
-    auto plb = pd->getBlockchain()->getBlockAt(0);
-    
+    network.printDeviceLocalBlockchainHashes();
     
     return 0;
 }

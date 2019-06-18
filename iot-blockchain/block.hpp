@@ -21,12 +21,7 @@ class Block
 public:
     Block(std::string author_profile_identifier, uint16_t index, size_t reserve);
     Block(std::string author_profile_identifier, uint16_t index, size_t reserve, std::string prev_block_hash);
-    Block(Block *block) :
-        Block(block->author_profile_identifier, block->index, block->transactions.size(), block->hash)
-    {
-        this->timestamp = block->timestamp;
-        this->prev_block_hash = block->prev_block_hash;
-    }
+    Block(Block *block);
     
     void appendTransaction(Transaction *transaction);
     
@@ -37,15 +32,8 @@ public:
     std::string computeHash(void);
     
     uint16_t getIndex(void);
-    std::string getAuthorProfileIdentifier(void)
-    {
-        return this->author_profile_identifier;
-    }
-    
-    std::string getPreviousBlockHash(void)
-    {
-        return this->prev_block_hash;
-    }
+    std::string getAuthorProfileIdentifier(void);
+    std::string getPreviousBlockHash(void);
     
     JSON json(void);
 

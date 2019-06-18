@@ -12,6 +12,12 @@ Transaction::Transaction(std::string author_profile_identifier, bool expedited)
 		.time_since_epoch()).count();
 }
 
+Transaction* Transaction::clone(void)
+{
+    return new Transaction(*this);
+}
+
+
 std::string Transaction::getHash(void)
 {
 	if (this->hash.empty())

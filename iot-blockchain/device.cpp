@@ -11,17 +11,20 @@
 Device::Device(std::string identifier, std::string admin_profile_identifier, BlockchainConfiguration configuration) :
     Blockchain(admin_profile_identifier, configuration)
 {
-    this->observer = configuration.observe_only;
     this->identifier = identifier;
-    
     this->registerResponders();
+    
+    this->blocks.emplace_back(std::make_unique<Block>(configuration.host_profile_identifier, 0,
+                                                      configuration.block_size_reserve));
+    
+    this->submitTransaction(new AdminTransferTransaction(admin_profile_identifier, admin_profile_identifier));
 }
 
 Device::Device(std::string identifier, const std::vector<std::unique_ptr<Block>> *blocks, BlockchainConfiguration configuration) :
     Blockchain(blocks, configuration)
 {
-    this->observer = configuration.observe_only;
     this->identifier = identifier;
+    this->configuration = configuration;
     
     this->registerResponders();
 }
@@ -42,7 +45,7 @@ void Device::receiveDeviceTransactionFromBlockchain(Transaction *transaction)
     else // transaction is requesting a reading; author new transaction with value
     {
         this->submitTransaction(new DeviceTransaction(this->identifier, device_transaction->getDeviceIdentifier(),
-                                                      this->d_value.value_or(0), transaction->requestsExpeditedBroadcast()));
+                                                      this->d_value.value_or(0), transaction->requestsExpeditedBroadcast()), false);
     }
 }
 
@@ -52,7 +55,7 @@ void Device::registerResponders(void)
                                                                          this, std::placeholders::_1));
     
     this->registerTransactionResponder<DeviceTransaction>(std::bind(&Device::receiveDeviceTransactionFromBlockchain,
-                                                                               this, std::placeholders::_1));
+                                                                    this, std::placeholders::_1));
 }
 
 std::string Device::getIdentifier(void)

@@ -7,6 +7,11 @@ AdminTransferTransaction::AdminTransferTransaction(std::string author_profile_id
 	this->new_admin_profile_identifier = new_admin_profile_identifier;
 }
 
+AdminTransferTransaction* AdminTransferTransaction::clone(void)
+{
+    return new AdminTransferTransaction(*this);
+}
+
 std::string AdminTransferTransaction::getAdminProfileIdentifier(void)
 {
 	return this->new_admin_profile_identifier;
@@ -53,7 +58,7 @@ std::string AdminTransferTransaction::description(void)
 {
 	char buffer[64];
 
-	sprintf(buffer, "Transfer admin rights to %s (device: %s)", this->new_admin_profile_identifier.c_str(), 
+	sprintf(buffer, "Transfer admin rights to %s (req. by: %s)", this->new_admin_profile_identifier.c_str(), 
 		this->author_profile_identifier.c_str());
 
 	return buffer;

@@ -18,8 +18,8 @@ Blockchain::Blockchain(std::string admin_profile_identifier, BlockchainConfigura
         typeid(AdminTransferTransaction)
     };
     
-    this->spawnNewBlock(); // save informing device of genesis block spawn
-    this->submitTransaction(new AdminTransferTransaction(admin_profile_identifier, admin_profile_identifier)); // install administrator in genesis transaction
+    this->spawnNewBlock(true); // save informing device of genesis block spawn
+    this->submitTransaction(new AdminTransferTransaction(admin_profile_identifier, admin_profile_identifier), false); // install administrator in genesis transaction
 }
 
 Blockchain::Blockchain(const std::vector<std::unique_ptr<Block>> *blocks, BlockchainConfiguration configuration) :
@@ -38,12 +38,12 @@ Blockchain::Blockchain(const std::vector<std::unique_ptr<Block>> *blocks, Blockc
         
         for (size_t i = 0; i < block->size(); i++)
         {
-            this->submitTransaction(block->getTransactionAt(i)->clone());
+            this->submitTransaction(block->getTransactionAt(i)->clone(), true);
         }
     }
 }
 
-void Blockchain::submitTransaction(Transaction *transaction)
+void Blockchain::submitTransaction(Transaction *transaction, bool reconciling)
 {
     std::type_index transaction_type = typeid(*transaction);
     
@@ -66,7 +66,7 @@ void Blockchain::submitTransaction(Transaction *transaction)
     
     auto lead_block = this->getLeadBlock();
     
-    if (!this->configuration.observe_only && transaction->readyToAppend())
+    if (transaction->readyToAppend())
     {
         lead_block->appendTransaction(transaction->clone()); // clone into local lead block
     }
@@ -77,12 +77,7 @@ void Blockchain::submitTransaction(Transaction *transaction)
     {
         if (transaction->requestsExpeditedBroadcast() && transaction->readyToAppend()) // transaction originated internally & requests an expedited broadcast
         {
-            if (this->sealed_block_responder != nullptr) // invoke device responder (if exists)
-            {
-//                (void)lead_block->getHash(true); // seal block
-                this->sealed_block_responder(lead_block);
-                this->spawnNewBlock();
-            }
+            this->spawnNewBlock(false);
         }
         else if (this->transaction_responder != nullptr) // regular transaction, broadcast as such (if responder registered)
         {
@@ -93,34 +88,32 @@ void Blockchain::submitTransaction(Transaction *transaction)
 
 void Blockchain::submitBlock(Block *block)
 {
-    if (this->getChain()->size() < 1)
-    {
-        this->blocks.emplace_back(std::make_unique<Block>(block)); // clone into local chain
-    }
-    
     auto lead_block = this->getLeadBlock();
-    
+
     if (block->getIndex() > lead_block->getIndex() && block->getPreviousBlockHash() == lead_block->getHash())
     {
         this->blocks.emplace_back(std::make_unique<Block>(block)); // clone into local chain
-        
+
         for (size_t i = 0; i < block->size(); i++)
         {
-            this->submitTransaction(block->getTransactionAt(i)->clone());
+            this->submitTransaction(block->getTransactionAt(i)->clone(), true);
         }
     }
-    else if (block->getIndex() == lead_block->getIndex() && block->size() > lead_block->size())
+    else if (block->getIndex() == lead_block->getIndex() && block->size() >= lead_block->size())
     {
-        for (size_t i = lead_block->size(); i < block->size(); i++)
+        this->blocks[block->getIndex()] = std::make_unique<Block>(block);
+
+        for (size_t i = 0; i < block->size(); i++)
         {
-            this->submitTransaction(block->getTransactionAt(i)->clone());
+            this->submitTransaction(block->getTransactionAt(i)->clone(), true);
         }
+
     }
-    
-    this->spawnNewBlock();
+
+    this->spawnNewBlock(true);
 }
 
-void Blockchain::spawnNewBlock(void)
+void Blockchain::spawnNewBlock(bool suppress)
 {
     auto chain_size = this->blocks.size();
     
@@ -134,8 +127,23 @@ void Blockchain::spawnNewBlock(void)
     }
     else // spawn genesis block
     {
-        this->blocks.push_back(std::make_unique<Block>(this->configuration.host_profile_identifier, 0,
+        this->blocks.emplace_back(std::make_unique<Block>(this->configuration.host_profile_identifier, 0,
                                                        this->configuration.block_size_reserve));
+    }
+    
+    if (!suppress && this->sealed_block_responder != nullptr) // invoke device responder (if exists)
+    {
+        this->sealed_block_responder(this->getBlockAt(this->blocks.size() - 1)); // fire sealed block
+    }
+}
+
+void Blockchain::invokeResponder(Transaction *transaction, std::type_index transaction_type)
+{
+    auto registered = this->transaction_responder_registrar.find(transaction_type) != this->transaction_responder_registrar.end();
+    
+    if (registered)
+    {
+        this->transaction_responder_registrar.at(transaction_type)(transaction);
     }
 }
 
@@ -153,4 +161,3 @@ std::vector<std::unique_ptr<Block>> *Blockchain::getChain(void)
 {
     return &this->blocks;
 }
-

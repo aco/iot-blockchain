@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 
+#include "log.hpp"
 #include "blockchain.hpp"
 
 class Device : public Blockchain
@@ -31,11 +32,10 @@ public:
     }
 
     bool online;
-    bool observer;
     
     virtual void registerResponders(void);
     
-private:
+protected:
     std::string identifier;
     std::optional<std::uint16_t> d_value;
 };
