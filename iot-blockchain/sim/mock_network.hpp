@@ -17,15 +17,10 @@
 class MockNetwork
 {
 public:
-    MockNetwork(std::string admin_profile_identifier)
-    {
-        this->admin_profile_identifier = admin_profile_identifier;
-    }
-    
     template<typename DerivedDevice>
     DerivedDevice *registerNetworkDevice(std::string identifier, bool observer)
     {
-        auto blockchain_configuration = BlockchainConfiguration
+        auto blockchain_configuration = LocalConfiguration
         {
             identifier,
             observer,
@@ -34,6 +29,8 @@ public:
         
         if (network_devices.size() < 1)
         {
+            this->admin_profile_identifier = identifier;
+            
             logOutput(LOG_ADD, "Formulating network using device: %s (%s) as administrator", identifier.c_str(),
                       typeid(DerivedDevice).name());
             
@@ -67,67 +64,12 @@ public:
         return (DerivedDevice*)network_devices.back().get();
     }
     
-    void broadcastTransaction(Transaction *transaction)
-    {
-        logOutput(LOG_OUTPUT, "%s", transaction->description().c_str());
-        
-        for (auto &device : network_devices)
-        {
-            auto contained_device = device.get();
-            
-            if (transaction->getAuthorProfileIdentifier() == contained_device->getIdentifier() ||
-                !contained_device->online) // do not submit to offline or origin devices
-            {
-                continue;
-            }
-            
-            contained_device->submitTransaction(transaction, false);
-        }
-    }
+    void broadcastTransaction(Transaction *transaction);
+    void broadcastBlock(Block *block);
     
-    void broadcastBlock(Block *block)
-    {
-        logOutput(LOG_ALERT, "Broadcasting block #%d (%hhu txn) from %s", block->getIndex(),
-                  block->size(), block->getAuthorProfileIdentifier().c_str());
-        
-        for (auto &device : network_devices)
-        {
-            auto contained_device = device.get();
-            
-            if (block->getAuthorProfileIdentifier() == contained_device->getIdentifier() || !contained_device->online) // do not submit to offline or origin devices
-            {
-                continue;
-            }
-            
-            contained_device->submitBlock(block);
-        }
-    }
+    void printDeviceLocalBlockchainHashes(void);
     
-    void printDeviceLocalBlockchainHashes(void)
-    {
-        logOutput(LOG_INFO, "Local lead block hashes of all network devices:");
-        
-        for (auto &device : this->network_devices)
-        {
-            std::cout << device->getIdentifier()
-            << '\t' << device->getBlockchain()->getChain()->size()
-                << device->getLeadBlock()->getHash(false)
-                << std::endl;
-        }
-    }
-    
-    std::vector<std::string> getDeviceIdentifiers(void)
-    {
-        std::vector<std::string> identifiers;
-        identifiers.reserve(this->network_devices.size());
-        
-        for (auto &device : this->network_devices)
-        {
-            identifiers.emplace_back(device->getIdentifier());
-        }
-        
-        return identifiers;
-    }
+    std::vector<std::string> getDeviceIdentifiers(void);
     
 private:
     std::string admin_profile_identifier;

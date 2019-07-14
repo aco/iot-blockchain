@@ -16,8 +16,8 @@
 class ParticipantDevice : public Device
 {
 public:
-    ParticipantDevice(std::string identifier, std::string admin_profile_identifier, BlockchainConfiguration configuration);
-    ParticipantDevice(std::string identifier, const std::vector<std::unique_ptr<Block>> *blocks, BlockchainConfiguration configuration);
+    ParticipantDevice(std::string identifier, std::string admin_profile_identifier, LocalConfiguration configuration);
+    ParticipantDevice(std::string identifier, const std::vector<std::unique_ptr<Block>> *blocks, LocalConfiguration configuration);
     
     void receiveRejectedTransactionFromBlockchain(Transaction *transaction);
     void registerResponders(void) override;

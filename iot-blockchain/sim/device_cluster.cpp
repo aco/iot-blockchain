@@ -8,13 +8,13 @@
 
 #include "device_cluster.hpp"
 
-ClusterDevice::ClusterDevice(std::string identifier, std::string admin_profile_identifier, BlockchainConfiguration configuration) :
+ClusterDevice::ClusterDevice(std::string identifier, std::string admin_profile_identifier, LocalConfiguration configuration) :
     ParticipantDevice(identifier, admin_profile_identifier, configuration)
 {
     this->registerResponders();
 }
 
-ClusterDevice::ClusterDevice(std::string identifier, const std::vector<std::unique_ptr<Block>> *blocks, BlockchainConfiguration configuration) :
+ClusterDevice::ClusterDevice(std::string identifier, const std::vector<std::unique_ptr<Block>> *blocks, LocalConfiguration configuration) :
     ParticipantDevice(identifier, blocks, configuration)
 {
     this->registerResponders();

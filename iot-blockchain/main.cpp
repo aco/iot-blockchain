@@ -13,34 +13,37 @@
 int main(int argc, const char * argv[])
 {
     auto admin_profile_identifier = "admin";
-    auto network = MockNetwork(admin_profile_identifier);
+    auto network = MockNetwork();
     
     // register standard device as administrator (first device to join the network)
-    auto admin_device = network.registerNetworkDevice<Device>(admin_profile_identifier, true);
+    auto admin_device = network.registerNetworkDevice<ParticipantDevice>(admin_profile_identifier, true);
 
     // we do not manually use this participant device below
     (void)network.registerNetworkDevice<ParticipantDevice>("light", false);
     
     admin_device->submitTransaction(new PolicyAmendmentTransaction("admin", "light", "admin", ACCESS_READ | ACCESS_WRITE));
 
-    // register cluster device
+    // register cluster device & subordinate devices
     auto cluster_device = network.registerNetworkDevice<ClusterDevice>("cluster", false);
 
     std::vector<std::string> cluster_subordinate_devices = { "gas", "flame" };
     cluster_device->registerSubordinateDevices(cluster_subordinate_devices);
 
+    // assign read permissions for all devices in cluster
     for (auto &network_device_identifier : network.getDeviceIdentifiers())
     {
         for (auto &cluster_subordinate_device : cluster_subordinate_devices)
         {
             admin_device->submitTransaction(new PolicyAmendmentTransaction("admin", cluster_subordinate_device, network_device_identifier,
-                                                                ACCESS_READ | ACCESS_WRITE));
+                                                                ACCESS_READ));
         }
     }
 
+    // test read + write permissions
     admin_device->submitTransaction(new DeviceTransaction("admin", "light", 50, false));
     admin_device->submitTransaction(new DeviceTransaction("admin", "gas"));
     
+    // print hashes of all devices' local lead blocks - expect match
     network.printDeviceLocalBlockchainHashes();
     
     return 0;

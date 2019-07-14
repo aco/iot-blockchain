@@ -8,6 +8,9 @@ public:
 	PolicyAmendmentTransaction(std::string author_profile_identifier, std::string device_identifier,
                                std::string subject_device_identifier, std::uint8_t access_flags, bool expedited = false);
 
+    
+    PolicyAmendmentTransaction *clone(void) override;
+    
 	bool authorise(Policy *policy) final override;
 	void execute(PolicyManager *policy_manager) final override;
 
@@ -18,11 +21,6 @@ public:
 	std::string description(void) override;
 
 	void computeHashAndSeal(void) override;
-    
-    virtual PolicyAmendmentTransaction *clone(void) override
-    {
-        return new PolicyAmendmentTransaction(*this);
-    }
 
 private:
 	std::string device_identifier;

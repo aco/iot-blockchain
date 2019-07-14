@@ -3,7 +3,7 @@
 #include "block.hpp"
 #include "transaction.hpp"
 
-struct BlockchainConfiguration
+struct LocalConfiguration
 {
     std::string host_profile_identifier;
 	bool observe_only;

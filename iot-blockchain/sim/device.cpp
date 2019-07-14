@@ -8,7 +8,7 @@
 
 #include "device.hpp"
 
-Device::Device(std::string identifier, std::string admin_profile_identifier, BlockchainConfiguration configuration) :
+Device::Device(std::string identifier, std::string admin_profile_identifier, LocalConfiguration configuration) :
     Blockchain(admin_profile_identifier, configuration)
 {
     this->identifier = identifier;
@@ -20,7 +20,7 @@ Device::Device(std::string identifier, std::string admin_profile_identifier, Blo
     this->submitTransaction(new AdminTransferTransaction(admin_profile_identifier, admin_profile_identifier));
 }
 
-Device::Device(std::string identifier, const std::vector<std::unique_ptr<Block>> *blocks, BlockchainConfiguration configuration) :
+Device::Device(std::string identifier, const std::vector<std::unique_ptr<Block>> *blocks, LocalConfiguration configuration) :
     Blockchain(blocks, configuration)
 {
     this->identifier = identifier;

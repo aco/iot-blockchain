@@ -26,8 +26,6 @@ public:
 	void computeHashAndSeal(void) override;
 
 private:
-	;
 	std::string device_identifier;
-
 	std::optional<std::uint16_t> t_value;
 };

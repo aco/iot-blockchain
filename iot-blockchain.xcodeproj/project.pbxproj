@@ -55,7 +55,7 @@
 		493FF15222B2EC0000B33EDC /* json.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = json.hpp; sourceTree = "<group>"; };
 		493FF15422B2EC1500B33EDC /* blockchain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = blockchain.cpp; sourceTree = "<group>"; };
 		493FF15522B2EC1500B33EDC /* blockchain.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = blockchain.hpp; sourceTree = "<group>"; };
-		493FF15722B2EC6000B33EDC /* blockchain_configuration.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = blockchain_configuration.hpp; sourceTree = "<group>"; };
+		493FF15722B2EC6000B33EDC /* local_configuration.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = local_configuration.hpp; sourceTree = "<group>"; };
 		493FF15822B2F2BC00B33EDC /* device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = device.cpp; sourceTree = "<group>"; };
 		493FF15922B2F2BC00B33EDC /* device.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = device.hpp; sourceTree = "<group>"; };
 		493FF15B22B2F62700B33EDC /* mock_network.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mock_network.cpp; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 			children = (
 				493FF13F22B2EBF500B33EDC /* block.cpp */,
 				493FF14922B2EBF500B33EDC /* block.hpp */,
-				493FF15722B2EC6000B33EDC /* blockchain_configuration.hpp */,
+				493FF15722B2EC6000B33EDC /* local_configuration.hpp */,
 				493FF15422B2EC1500B33EDC /* blockchain.cpp */,
 				493FF15522B2EC1500B33EDC /* blockchain.hpp */,
 				493FF14422B2EBF500B33EDC /* policy_manager.cpp */,

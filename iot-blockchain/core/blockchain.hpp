@@ -14,13 +14,13 @@
 
 #include "policy_manager.hpp"
 #include "block.hpp"
-#include "blockchain_configuration.hpp"
+#include "local_configuration.hpp"
 
 class Blockchain : protected Policy
 {
 public:
-    Blockchain(std::string admin_profile_identifier, BlockchainConfiguration configuration);
-    Blockchain(const std::vector<std::unique_ptr<Block>> *blocks, BlockchainConfiguration configuration);
+    Blockchain(std::string admin_profile_identifier, LocalConfiguration configuration);
+    Blockchain(const std::vector<std::unique_ptr<Block>> *blocks, LocalConfiguration configuration);
     
     void submitTransaction(Transaction *transaction, bool reconciling = false);
     void submitBlock(Block *block);
@@ -41,7 +41,7 @@ public:
     
 protected:
     void spawnNewBlock(bool suppress);
-    BlockchainConfiguration configuration;
+    LocalConfiguration configuration;
     
     std::vector<std::unique_ptr<Block>> blocks;
     

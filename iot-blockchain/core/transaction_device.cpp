@@ -12,12 +12,10 @@ DeviceTransaction::DeviceTransaction(std::string author_profile_identifier, std:
 	this->t_value = value;
 }
 
-
 DeviceTransaction* DeviceTransaction::clone(void)
 {
     return new DeviceTransaction(*this);
 }
-
 
 std::optional<std::uint16_t> DeviceTransaction::getValue(void)
 {

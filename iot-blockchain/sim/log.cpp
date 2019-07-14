@@ -18,12 +18,3 @@ void logOutput(LogSymbol symbol, const char *format, ...)
 
 	std::cout << std::endl;
 }
-
-//std::string printDeviceReceipt(std::string identifier, std::string action)
-//{
-//	char* output = new char[identifier.length() + action.length() + 16];
-//
-//	sprintf(output, "Device: %s %s...", identifier.c_str(), action.c_str());
-//
-//	return output;
-//}

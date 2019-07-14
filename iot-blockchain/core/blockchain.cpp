@@ -8,7 +8,7 @@
 
 #include "blockchain.hpp"
 
-Blockchain::Blockchain(std::string admin_profile_identifier, BlockchainConfiguration configuration) :
+Blockchain::Blockchain(std::string admin_profile_identifier, LocalConfiguration configuration) :
     Policy(admin_profile_identifier)
 {
     this->configuration = configuration;
@@ -22,7 +22,7 @@ Blockchain::Blockchain(std::string admin_profile_identifier, BlockchainConfigura
     this->submitTransaction(new AdminTransferTransaction(admin_profile_identifier, admin_profile_identifier), false); // install administrator in genesis transaction
 }
 
-Blockchain::Blockchain(const std::vector<std::unique_ptr<Block>> *blocks, BlockchainConfiguration configuration) :
+Blockchain::Blockchain(const std::vector<std::unique_ptr<Block>> *blocks, LocalConfiguration configuration) :
     Policy(blocks->at(0).get()->getTransactionAt(0)->getAuthorProfileIdentifier()) // genesis transaction always declares admin profile identifier
 {
     this->configuration = configuration;
@@ -52,7 +52,7 @@ void Blockchain::submitTransaction(Transaction *transaction, bool reconciling)
         auto is_administrative = std::find(this->administrative_transaction_types.begin(),
                                            this->administrative_transaction_types.end(), transaction_type) != this->administrative_transaction_types.end();
         
-        transaction->execute((is_administrative ? (PolicyManager*)this : nullptr)); // send policy manager only if transaction is administrative
+        transaction->execute((is_administrative ? (PolicyManager*)this : nullptr)); // pass policy manager only if transaction is administrative
     }
     else // rejected
     {
@@ -94,7 +94,7 @@ void Blockchain::submitBlock(Block *block)
     {
         this->blocks.emplace_back(std::make_unique<Block>(block)); // clone into local chain
 
-        for (size_t i = 0; i < block->size(); i++)
+        for (size_t i = 0; i < block->size(); i++) // manually include transactions (allows for syncing policy)
         {
             this->submitTransaction(block->getTransactionAt(i)->clone(), true);
         }

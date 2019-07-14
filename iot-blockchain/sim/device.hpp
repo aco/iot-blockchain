@@ -17,8 +17,8 @@
 class Device : public Blockchain
 {
 public:
-    Device(std::string identifier, std::string admin_profile_identifier, BlockchainConfiguration configuration);
-    Device(std::string identifier, const std::vector<std::unique_ptr<Block>> *blocks, BlockchainConfiguration configuration);
+    Device(std::string identifier, std::string admin_profile_identifier, LocalConfiguration configuration);
+    Device(std::string identifier, const std::vector<std::unique_ptr<Block>> *blocks, LocalConfiguration configuration);
     
     void receiveTransactionFromBlockchain(Transaction *transaction);
     virtual void receiveDeviceTransactionFromBlockchain(Transaction *transaction);

@@ -8,13 +8,13 @@
 
 #include "device_participant.hpp"
 
-ParticipantDevice::ParticipantDevice(std::string identifier, std::string admin_profile_identifier, BlockchainConfiguration configuration) :
+ParticipantDevice::ParticipantDevice(std::string identifier, std::string admin_profile_identifier, LocalConfiguration configuration) :
 Device(identifier, admin_profile_identifier, configuration)
 {
     this->registerResponders();
 }
 
-ParticipantDevice::ParticipantDevice(std::string identifier, const std::vector<std::unique_ptr<Block>> *blocks, BlockchainConfiguration configuration) :
+ParticipantDevice::ParticipantDevice(std::string identifier, const std::vector<std::unique_ptr<Block>> *blocks, LocalConfiguration configuration) :
 Device(identifier, blocks, configuration)
 {
     this->registerResponders();

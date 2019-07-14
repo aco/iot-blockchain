@@ -9,6 +9,11 @@ PolicyAmendmentTransaction::PolicyAmendmentTransaction(std::string author_profil
     this->access_flags = access_flags;
 }
 
+PolicyAmendmentTransaction* PolicyAmendmentTransaction::clone(void)
+{
+    return new PolicyAmendmentTransaction(*this);
+}
+
 std::string PolicyAmendmentTransaction::getDeviceIdentifier(void)
 {
 	return this->device_identifier;
