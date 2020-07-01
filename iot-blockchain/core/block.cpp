@@ -10,104 +10,115 @@
 
 Block::Block(std::string author_profile_identifier, uint16_t index, size_t reserve)
 {
-    this->timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()
-                                                                            .time_since_epoch()).count();
-    this->index = index;
-    this->transactions.reserve(reserve);
-    this->author_profile_identifier = author_profile_identifier;
+	this->timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()
+																																					.time_since_epoch()).count();
+	this->index = index;
+	this->transactions.reserve(reserve);
+	this->author_profile_identifier = author_profile_identifier;
 }
 
 Block::Block(std::string author_profile_identifier, uint16_t index, size_t reserve, std::string prev_block_hash) :
-    Block(author_profile_identifier, index, reserve)
+Block(author_profile_identifier, index, reserve)
 {
-    this->prev_block_hash = prev_block_hash;
+	this->prev_block_hash = prev_block_hash;
 }
 
 Block::Block(Block *block) : // clones block definition, leaves population to blockchain (allows blockchain to process contained transactions)
-    Block(block->author_profile_identifier, block->index, block->transactions.size(), block->hash)
+Block(block->author_profile_identifier, block->index, block->transactions.size(), block->hash)
 {
-    this->timestamp = block->timestamp;
-    this->prev_block_hash = block->prev_block_hash;
+	this->timestamp = block->timestamp;
+	this->prev_block_hash = block->prev_block_hash;
 }
 
 void Block::appendTransaction(Transaction *transaction)
 {
-    if (this->hash.empty())
-    {
-        this->transactions.emplace_back(transaction);
-    }
-    else
-    {
-        throw "Attempt to append transaction to a sealed block.";
-    }
+	if (this->hash.empty())
+	{
+		this->transactions.emplace_back(transaction);
+	}
+	else
+	{
+		throw "Attempt to append transaction to a sealed block.";
+	}
 }
 
 size_t Block::size(void)
 {
-    return this->transactions.size();
+	return this->transactions.size();
 }
 
 Transaction *Block::getTransactionAt(size_t position)
 {
-    return this->transactions.at(position).get();
+	return this->transactions.at(position).get();
 }
 
 std::string Block::getHash(bool seal)
 {
-    auto hash = this->computeHash();
-    
-    if (seal)
-    {
-        this->hash = hash;
-    }
-    
-    return hash;
+	auto hash = this->computeHash();
+	
+	if (seal)
+	{
+		this->hash = hash;
+	}
+	
+	return hash;
 }
 
 std::string Block::computeHash(void)
 {
-    std::stringstream string_stream;
-    string_stream << this->timestamp;
-    
-    for (auto &transaction : this->transactions)
-    {
-        string_stream << transaction->getHash();
-    }
-    
-    if (!this->prev_block_hash.empty())
-    {
-        string_stream << picosha2::bytes_to_hex_string(this->prev_block_hash.begin(), this->prev_block_hash.end());
-    }
-    
-    auto result = std::vector<unsigned char>(picosha2::k_digest_size);
-    auto hash_digest_input = string_stream.str();
-    
-    picosha2::hash256(hash_digest_input.begin(), hash_digest_input.end(), result.begin(), result.end());
-    
-    return picosha2::bytes_to_hex_string(result.begin(), result.end());
+	std::stringstream string_stream;
+	string_stream << this->timestamp;
+	
+	for (auto &transaction : this->transactions)
+	{
+		string_stream << transaction->getHash();
+	}
+	
+	if (!this->prev_block_hash.empty())
+	{
+		string_stream << picosha2::bytes_to_hex_string(this->prev_block_hash.begin(), this->prev_block_hash.end());
+	}
+	
+	auto result = std::vector<unsigned char>(picosha2::k_digest_size);
+	auto hash_digest_input = string_stream.str();
+	
+	picosha2::hash256(hash_digest_input.begin(), hash_digest_input.end(), result.begin(), result.end());
+	
+	return picosha2::bytes_to_hex_string(result.begin(), result.end());
 }
 
 uint16_t Block::getIndex(void)
 {
-    return this->index;
+	return this->index;
 }
 
 std::string Block::getAuthorProfileIdentifier(void)
 {
-    return this->author_profile_identifier;
+	return this->author_profile_identifier;
 }
 
 std::string Block::getPreviousBlockHash(void)
 {
-    return this->prev_block_hash;
+	return this->prev_block_hash;
 }
 
 JSON Block::json(void)
 {
-    return
-    {
-        { "timestamp", this->timestamp },
-        { "index", this->index },
-        { "prev_hash", this->prev_block_hash }
-    };
+	JSON json =
+	{
+		{ "timestamp", this->timestamp },
+		{ "index", this->index },
+		{ "hash", this->hash },
+		{ "prev_hash", this->prev_block_hash },
+	};
+	
+	if (this->transactions.size() > 0)
+	{
+		for (size_t i = 0; i < this->transactions.size(); i++)
+		{
+			json["transactions"].push_back(this->transactions[i].get()->json());
+		}
+	}
+	
+	return json;
 }

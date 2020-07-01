@@ -19,33 +19,33 @@
 class Block
 {
 public:
-    Block(std::string author_profile_identifier, uint16_t index, size_t reserve);
-    Block(std::string author_profile_identifier, uint16_t index, size_t reserve, std::string prev_block_hash);
-    Block(Block *block);
-    
-    void appendTransaction(Transaction *transaction);
-    
-    size_t size(void);
-    Transaction *getTransactionAt(size_t position);
-    
-    std::string getHash(bool seal = false);
-    std::string computeHash(void);
-    
-    uint16_t getIndex(void);
-    std::string getAuthorProfileIdentifier(void);
-    std::string getPreviousBlockHash(void);
-    
-    JSON json(void);
-
+	Block(std::string author_profile_identifier, uint16_t index, size_t reserve);
+	Block(std::string author_profile_identifier, uint16_t index, size_t reserve, std::string prev_block_hash);
+	Block(Block *block);
+	
+	void appendTransaction(Transaction *transaction);
+	
+	size_t size(void);
+	Transaction *getTransactionAt(size_t position);
+	
+	std::string getHash(bool seal = false);
+	std::string computeHash(void);
+	
+	uint16_t getIndex(void);
+	std::string getAuthorProfileIdentifier(void);
+	std::string getPreviousBlockHash(void);
+	
+	JSON json(void);
+	
 private:
-    std::string author_profile_identifier;
-    std::string prev_block_hash;
-    std::string hash;
-    
-    uint64_t timestamp;
-    uint16_t index;
-    
-    std::vector<std::unique_ptr<Transaction>> transactions;
+	std::string author_profile_identifier;
+	std::string prev_block_hash;
+	std::string hash;
+	
+	uint64_t timestamp;
+	uint16_t index;
+	
+	std::vector<std::unique_ptr<Transaction>> transactions;
 };
 
 #endif /* block_hpp */

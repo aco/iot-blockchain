@@ -17,27 +17,27 @@
 class Device : public Blockchain
 {
 public:
-    Device(std::string identifier, std::string admin_profile_identifier, LocalConfiguration configuration);
-    Device(std::string identifier, const std::vector<std::unique_ptr<Block>> *blocks, LocalConfiguration configuration);
-    
-    void receiveTransactionFromBlockchain(Transaction *transaction);
-    virtual void receiveDeviceTransactionFromBlockchain(Transaction *transaction);
-    
-    std::string getIdentifier(void);
-    Blockchain *getBlockchain(void);
-    
-    bool operator == (Device const &lhs) const
-    {
-        return lhs.identifier == this->identifier;
-    }
-
-    bool online;
-    
-    virtual void registerResponders(void);
-    
+	Device(std::string identifier, std::string admin_profile_identifier, LocalConfiguration configuration);
+	Device(std::string identifier, const std::vector<std::unique_ptr<Block>> *blocks, LocalConfiguration configuration);
+	
+	void receiveTransactionFromBlockchain(Transaction *transaction);
+	virtual void receiveDeviceTransactionFromBlockchain(Transaction *transaction);
+	
+	std::string getIdentifier(void);
+	Blockchain *getBlockchain(void);
+	
+	bool operator == (Device const &lhs) const
+	{
+		return lhs.identifier == this->identifier;
+	}
+	
+	bool online;
+	
+	virtual void registerResponders(void);
+	
 protected:
-    std::string identifier;
-    std::optional<std::uint16_t> d_value;
+	std::string identifier;
+	std::optional<std::uint16_t> d_value;
 };
 
 #endif /* device_hpp */

@@ -15,41 +15,44 @@
 #include "policy_manager.hpp"
 #include "block.hpp"
 #include "local_configuration.hpp"
+#include "json.hpp"
 
 class Blockchain : protected Policy
 {
 public:
-    Blockchain(std::string admin_profile_identifier, LocalConfiguration configuration);
-    Blockchain(const std::vector<std::unique_ptr<Block>> *blocks, LocalConfiguration configuration);
-    
-    void submitTransaction(Transaction *transaction, bool reconciling = false);
-    void submitBlock(Block *block);
-    
-    Block *getLeadBlock(void);
-    Block *getBlockAt(size_t index);
-    std::vector<std::unique_ptr<Block>> *getChain(void);
-    
-    std::function<void(Block*)> sealed_block_responder;
-    std::function<void(Transaction*)> transaction_responder;
-    std::function<void(Transaction*)> rejection_responder;
-    
-    template<typename DerivedTransaction>
-    void registerTransactionResponder(std::function<void(Transaction*)> callback)
-    {
-        this->transaction_responder_registrar.emplace(typeid(DerivedTransaction), callback);
-    }
-    
+	Blockchain(std::string admin_profile_identifier, LocalConfiguration configuration);
+	Blockchain(const std::vector<std::unique_ptr<Block>> *blocks, LocalConfiguration configuration);
+	
+	void submitTransaction(Transaction *transaction, bool reconciling = false);
+	void submitBlock(Block *block);
+	
+	Block *getLeadBlock(void);
+	Block *getBlockAt(size_t index);
+	std::vector<std::unique_ptr<Block>> *getChain(void);
+	
+	std::function<void(Block*)> sealed_block_responder;
+	std::function<void(Transaction*)> transaction_responder;
+	std::function<void(Transaction*)> rejection_responder;
+	
+	template<typename DerivedTransaction>
+	void registerTransactionResponder(std::function<void(Transaction*)> callback)
+	{
+		this->transaction_responder_registrar.emplace(typeid(DerivedTransaction), callback);
+	}
+	
+	
+	JSON json(void);
+	
+	std::vector<std::unique_ptr<Block>> blocks;
 protected:
-    void spawnNewBlock(bool suppress);
-    LocalConfiguration configuration;
-    
-    std::vector<std::unique_ptr<Block>> blocks;
-    
+	void spawnNewBlock(bool suppress);
+	LocalConfiguration configuration;
+	
 private:
-    void invokeResponder(Transaction *transaction, std::type_index transaction_type = typeid(Transaction));;
-    
-    std::map<std::type_index, std::function<void(Transaction*)>> transaction_responder_registrar;
-    std::vector<std::type_index> administrative_transaction_types;
+	void invokeResponder(Transaction *transaction, std::type_index transaction_type = typeid(Transaction));;
+	
+	std::map<std::type_index, std::function<void(Transaction*)>> transaction_responder_registrar;
+	std::vector<std::type_index> administrative_transaction_types;
 };
 
 #endif /* blockchain_hpp */

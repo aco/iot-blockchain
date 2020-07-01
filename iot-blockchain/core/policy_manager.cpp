@@ -6,7 +6,7 @@ PolicyManager::PolicyManager(std::string admin_profile_identifier)
 }
 
 Policy::Policy(std::string admin_profile_identifier) :
-	PolicyManager(admin_profile_identifier)
+PolicyManager(admin_profile_identifier)
 {
 	;
 }

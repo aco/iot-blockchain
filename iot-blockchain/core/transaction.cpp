@@ -6,15 +6,15 @@
 Transaction::Transaction(std::string author_profile_identifier, bool expedited)
 {
 	this->author_profile_identifier = author_profile_identifier;
-    this->expedited = expedited;
-
+	this->expedited = expedited;
+	
 	this->timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()
-		.time_since_epoch()).count();
+																																					.time_since_epoch()).count();
 }
 
 Transaction* Transaction::clone(void)
 {
-    return new Transaction(*this);
+	return new Transaction(*this);
 }
 
 
@@ -24,7 +24,7 @@ std::string Transaction::getHash(void)
 	{
 		this->computeHashAndSeal();
 	}
-
+	
 	return this->hash;
 }
 
@@ -45,12 +45,12 @@ void Transaction::execute(PolicyManager *policy_manager)
 
 bool Transaction::readyToAppend(void)
 {
-    return true;
+	return true;
 }
 
 bool Transaction::requestsExpeditedBroadcast(void)
 {
-    return this->expedited;
+	return this->expedited;
 }
 
 JSON Transaction::json(void)
@@ -60,7 +60,7 @@ JSON Transaction::json(void)
 		{ "timestamp", this->timestamp },
 		{ "author", this->author_profile_identifier },
 		{ "hash", this->getHash() },
-        { "expedited", this->expedited }
+		{ "expedited", this->expedited }
 	};
 }
 

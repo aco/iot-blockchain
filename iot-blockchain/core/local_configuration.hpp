@@ -5,7 +5,7 @@
 
 struct LocalConfiguration
 {
-    std::string host_profile_identifier;
+	std::string host_profile_identifier;
 	bool observe_only;
 	size_t block_size_reserve;
 };
